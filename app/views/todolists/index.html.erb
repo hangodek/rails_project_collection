@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Todolists" %>
+
+<h1>Todolists</h1>
+
+<div id="todolists">
+  <% @todolists.each do |todolist| %>
+    <%= render todolist %>
+    <p>
+      <%= link_to "Show this todolist", todolist %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New todolist", new_todolist_path %>

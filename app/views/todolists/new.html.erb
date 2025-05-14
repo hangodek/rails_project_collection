@@ -1,0 +1,11 @@
+<% content_for :title, "New todolist" %>
+
+<h1>New todolist</h1>
+
+<%= render "form", todolist: @todolist %>
+
+<br>
+
+<div>
+  <%= link_to "Back to todolists", todolists_path %>
+</div>
