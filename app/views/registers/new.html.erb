@@ -1,0 +1,26 @@
+<h1 class="text-3xl font-bold">Register</h1>
+
+<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+
+<%= form_with model: @user, url: registers_path, html: {class: "flex flex-col justify-center items-center "} do |form| %>
+  <%= form.email_field :email_address,
+                   required: true,
+                   autofocus: true,
+                   autocomplete: "username",
+                   placeholder: "Enter your email address",
+                   value: params[:email_address],
+                   class: "input" %><br>
+  <%= form.password_field :password,
+                      required: true,
+                      autocomplete: "current-password",
+                      placeholder: "Enter your password",
+                      maxlength: 72,
+                      class: "input" %><br>
+  <%= form.submit "Register you account", class: "btn" %>
+<% end %>
+<br>
+
+<div class="flex gap-2">
+  <%= link_to "Already has an account?", new_session_path, class: "link link-hover" %>
+</div>

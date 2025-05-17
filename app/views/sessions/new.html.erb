@@ -1,0 +1,27 @@
+<h1 class="text-3xl font-bold">Login</h1>
+
+<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+
+<%= form_with url: session_path, html: {class: "flex flex-col justify-center items-center "} do |form| %>
+  <%= form.email_field :email_address,
+                   required: true,
+                   autofocus: true,
+                   autocomplete: "username",
+                   placeholder: "Enter your email address",
+                   value: params[:email_address],
+                   class: "input" %><br>
+  <%= form.password_field :password,
+                      required: true,
+                      autocomplete: "current-password",
+                      placeholder: "Enter your password",
+                      maxlength: 72,
+                      class: "input" %><br>
+  <%= form.submit "Sign in", class: "btn" %>
+<% end %>
+<br>
+
+<div class="flex gap-2">
+  <%= link_to "Forgot password?", new_password_path, class: "link link-hover" %>
+  <%= link_to "Doesn't have an account?", new_register_path, class: "link link-hover" %>
+</div>

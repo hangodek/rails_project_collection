@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@source "../../../public/*.html";
+@source "../../../app/helpers/**/*.rb";
+@source "../../../app/javascript/**/*.js";
+@source "../../../app/views/**/*";
+
+@plugin "daisyui";
+
+.field_with_errors {
+  @apply w-full flex justify-center;
+}
+
+.field_with_errors input {
+  @apply input-error;
+}
