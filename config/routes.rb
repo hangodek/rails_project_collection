@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  get "registers/new", as: "new_registers"
+  # get "registers/new", as: "new_registers"
   get "homepages/index"
   resources :todolists
+  resources :registers, only: [ :new, :create ]
   resource :session
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

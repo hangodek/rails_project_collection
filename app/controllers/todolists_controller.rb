@@ -65,6 +65,6 @@ class TodolistsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def todolist_params
-      params.expect(todolist: [ :title, :description, :status, :deadline_date ])
+      params.expect(todolist: [ :title, :description, :completed, :deadline ])
     end
 end
