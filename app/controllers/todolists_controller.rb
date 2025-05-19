@@ -21,11 +21,13 @@ class TodolistsController < ApplicationController
 
   # POST /todolists or /todolists.json
   def create
+    user = User.find_by(email_address: Current.session.user.email_address)
     @todolist = Todolist.new(todolist_params)
+    @todolist.user = user
 
     respond_to do |format|
       if @todolist.save
-        format.html { redirect_to @todolist, notice: "Todolist was successfully created." }
+        format.html { redirect_to homepages_index_path, notice: "Todolist was successfully created." }
         format.json { render :show, status: :created, location: @todolist }
       else
         format.html { render :new, status: :unprocessable_entity }

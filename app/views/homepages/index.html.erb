@@ -1,2 +1,44 @@
 <h1 class="text-3xl font-bold">Task list</h1>
-<%= link_to "Create new task", new_todolist_path, class: "btn btn-primary" %>
+
+<div class="flex gap-4 items-center">
+  <%= link_to "Create new task", new_todolist_path, class: "btn btn-primary" %>
+  <%= form_with method: :get, html: {class: "flex items-center gap-4"} do |form| %>
+    <div>
+      <%= form.label :completed, "Completed: " %>
+      <%= form.check_box :completed, class: "checkbox" %>
+    </div>
+
+    <div>
+      <%= form.submit "Filter", class: "btn" %>
+    </div>
+  <% end %>
+  
+  <%= form_with url: homepages_index_path, method: :get do |form| %>
+    <div>
+      <%= form.submit "Unfilter", class: "btn", disabled: params[:completed].present? == false %>
+    </div>
+  <% end %>
+  
+</div>
+
+<% if params[:completed] %>
+  <p>Filter is active (completed tasks only) <%= params[:completed] == "1" %></p>
+<% end %>
+
+
+<div id="todolists" class="grid grid-rows-3 grid-cols-3 grid gap-4">
+  <% @todolists.each do |todolist| %>
+
+    <% if todolist.completed == (params[:completed] == "1") %>
+      <div class="card shadow-2xl bg-base-100 w-96">
+          <div class="card-body">
+              <h2 class="card-title"><%= todolist.title %></h2>
+              <p><%= todolist.description %></p>
+              <div class="card-actions justify-end">
+                  <%= link_to "Show this todolist", todolist, class: "btn btn-secondary" %>
+              </div>
+          </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

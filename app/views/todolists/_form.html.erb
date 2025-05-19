@@ -1,3 +1,5 @@
+<%= Current.session.user.email_address %>
+
 <%= form_with model: todolist, html: {class: "flex flex-col gap-4"} do |form| %>
   <% if todolist.errors.any? %>
     <div style="color: red">
@@ -22,13 +24,13 @@
   </div>
 
   <div>
-    <%= form.label :status, style: "display: block" %>
+    <%= form.label :completed, style: "display: block" %>
     <%= form.checkbox :completed, class: "checkbox" %>
   </div>
 
   <div>
-    <%= form.label :deadline_date, style: "display: block" %>
-    <%= form.date_field :deadline_date, class: "border-2 border-black/10 rounded-sm p-2" %>
+    <%= form.label :deadline, style: "display: block" %>
+    <%= form.date_field :deadline, class: "border-2 border-black/10 rounded-sm p-2" %>
   </div>
 
   <div>
