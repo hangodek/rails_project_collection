@@ -4,5 +4,11 @@
 
 import { application } from "./application"
 
+import ClipboardController from "./clipboard_controller"
+application.register("clipboard", ClipboardController)
+
+import FiltercheckboxController from "./filtercheckbox_controller"
+application.register("filtercheckbox", FiltercheckboxController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)

@@ -3,14 +3,18 @@
 <div class="flex gap-4 items-center">
   <%= link_to "Create new task", new_todolist_path, class: "btn btn-primary" %>
   <%= form_with method: :get, html: {class: "flex items-center gap-4"} do |form| %>
-    <div>
-      <%= form.label :completed, "Completed: " %>
-      <%= form.check_box :completed, class: "checkbox" %>
-    </div>
 
-    <div>
-      <%= form.submit "Filter", class: "btn" %>
+    <div class="flex items-center gap-4" data-controller="filtercheckbox">
+      <div>
+        <%= form.label :completed, "Completed: " %>
+        <%= form.check_box :completed, class: "checkbox", disabled: params[:completed].present? == true, "data-action": "filtercheckbox#enablefilter" %>
+      </div>
+
+      <div>
+        <%= form.submit "Filter", class: "btn", disabled: true, "data-filtercheckbox-target": "filterbtn" %>
+      </div>
     </div>
+    
   <% end %>
   
   <%= form_with url: homepages_index_path, method: :get do |form| %>
@@ -41,4 +45,14 @@
       </div>
     <% end %>
   <% end %>
+</div>
+
+<div data-controller="clipboard">
+  <p>PIN : </p> <input data-clipboard-target="clipboard_data" type="text" name="pin" id="pin" value="1234" readonly>
+  <button data-action="click->clipboard#copy">Copy</button>
+</div>
+
+<div data-controller="clipboard">
+  <p>PIN : </p> <input data-clipboard-target="clipboard_data" type="text" name="pin" id="pin" value="asdasdaksd" readonly>
+  <button data-action="click->clipboard#copy">Copy</button>
 </div>
