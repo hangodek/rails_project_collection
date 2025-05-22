@@ -8,11 +8,13 @@ class TodolistsController < ApplicationController
 
   # GET /todolists/1 or /todolists/1.json
   def show
+    render layout: "todolist_form"
   end
 
   # GET /todolists/new
   def new
     @todolist = Todolist.new
+    render layout: "todolist_form"
   end
 
   # GET /todolists/1/edit
@@ -40,7 +42,10 @@ class TodolistsController < ApplicationController
   def update
     respond_to do |format|
       if @todolist.update(todolist_params)
-        format.html { redirect_to @todolist, notice: "Todolist was successfully updated." }
+        format.html do
+          flash[:notice] = "To do list updated successfully"
+          redirect_back(fallback_location: root_path)
+        end
         format.json { render :show, status: :ok, location: @todolist }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,7 +59,7 @@ class TodolistsController < ApplicationController
     @todolist.destroy!
 
     respond_to do |format|
-      format.html { redirect_to todolists_path, status: :see_other, notice: "Todolist was successfully destroyed." }
+      format.html { redirect_to root_path, status: :see_other, notice: "Todolist was successfully destroyed." }
       format.json { head :no_content }
     end
   end

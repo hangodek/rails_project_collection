@@ -1,11 +1,3 @@
 <% content_for :title, "New todolist" %>
 
-<h1 class="text-3xl font-bold">New todolist</h1>
-
 <%= render "form", todolist: @todolist %>
-
-<br>
-
-<div>
-  <%= link_to "Back to homepages", homepages_index_path, class: "btn btn-error" %>
-</div>

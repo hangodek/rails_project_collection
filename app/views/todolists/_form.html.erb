@@ -1,11 +1,11 @@
-<%= Current.session.user.email_address %>
-
-<%= form_with model: todolist, html: {class: "flex flex-col gap-4"} do |form| %>
+<%= form_with model: todolist, html: {class: "flex flex-col flex-1 gap-6 p-6 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm border border-blue-100 max-w-2xl mx-auto"} do |form| %>
+  <h1 class="text-3xl font-bold self-center">New todolist</h1>
+  
   <% if todolist.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(todolist.errors.count, "error") %> prohibited this todolist from being saved:</h2>
+    <div class="bg-red-50/80 border-l-4 border-red-500 p-4 mb-4 rounded-r text-red-700">
+      <h2 class="font-bold text-lg mb-2"><%= pluralize(todolist.errors.count, "error") %> prohibited this todolist from being saved:</h2>
 
-      <ul>
+      <ul class="list-disc pl-5 space-y-1">
         <% todolist.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -13,27 +13,30 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title, class: "input" %>
+  <div class="space-y-2">
+    <%= form.label :title, class: "block text-sm font-medium text-blue-800" %>
+    <%= form.text_field :title, class: "input input-bordered w-full focus:ring-2 focus:ring-blue-300 focus:border-blue-400" %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description, class: "input" %>
+  <div class="space-y-2">
+    <%= form.label :description, class: "block text-sm font-medium text-blue-800" %>
+    <%= form.text_field :description, class: "input input-bordered w-full focus:ring-2 focus:ring-blue-300 focus:border-blue-400" %>
   </div>
 
-  <div>
-    <%= form.label :completed, style: "display: block" %>
-    <%= form.checkbox :completed, class: "checkbox" %>
+  <div class="flex items-center gap-3 pt-2">
+    <%= form.check_box :completed, class: "checkbox checkbox-primary size-5 border-2" %>
+    <%= form.label :completed, class: "text-sm font-medium text-blue-800 cursor-pointer" %>
   </div>
 
-  <div>
-    <%= form.label :deadline, style: "display: block" %>
-    <%= form.date_field :deadline, class: "border-2 border-black/10 rounded-sm p-2" %>
+  <div class="space-y-2">
+    <%= form.label :deadline, class: "block text-sm font-medium text-blue-800" %>
+    <%= form.date_field :deadline, class: "input input-bordered w-full focus:ring-2 focus:ring-blue-300 focus:border-blue-400" %>
   </div>
 
+  <div class="pt-4">
+    <%= form.submit class: "btn btn-primary w-full hover:scale-[1.02] transition-transform shadow-md" %>
+  </div>
   <div>
-    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Back to homepages", homepages_index_path, class: "btn btn-error w-full hover:scale-[1.02] transition-transform shadow-md" %>
   </div>
 <% end %>

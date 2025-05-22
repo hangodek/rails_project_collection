@@ -1,22 +1,36 @@
-<div id="<%= dom_id todolist %>">
-  <p>
-    <strong>Title:</strong>
-    <%= todolist.title %>
+<div id="<%= dom_id todolist %>" class="flex flex-col gap-4 p-6 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm border border-blue-100 min-w-2xl mx-auto">
+  <h1 class="text-2xl font-bold self-center mb-2 text-blue-800">Todo List Details</h1>
+
+  <p class="space-y-1">
+    <strong class="block text-sm font-medium text-blue-800">Title:</strong>
+    <span class="block p-2 bg-white border border-blue-100 rounded"><%= todolist.title %></span>
   </p>
 
-  <p>
-    <strong>Description:</strong>
-    <%= todolist.description %>
+  <p class="space-y-1">
+    <strong class="block text-sm font-medium text-blue-800">Description:</strong>
+    <span class="block p-2 bg-white border border-blue-100 rounded"><%= todolist.description %></span>
   </p>
 
-  <p>
-    <strong>Completed:</strong>
-    <%= todolist.completed ? "Yes" : "No" %>
+  <p class="space-y-1">
+    <strong class="block text-sm font-medium text-blue-800">Completed:</strong>
+    <span class="block p-2 bg-white border border-blue-100 rounded"><%= todolist.completed ? "Yes" : "No" %></span>
   </p>
 
-  <p>
-    <strong>Deadline:</strong>
-    <%= todolist.deadline %>
+  <p class="space-y-1">
+    <strong class="block text-sm font-medium text-blue-800">Deadline:</strong>
+    <span class="block p-2 bg-white border border-blue-100 rounded"><%= todolist.deadline %></span>
   </p>
 
+  <div class="flex flex-col gap-4 p-6 rounded-lg max-w-2xl mx-auto mt-4">
+    <div class="flex flex-col justify-center items-center sm:flex-row gap-3 justify-center">
+      <%= link_to "Edit this todolist", edit_todolist_path(@todolist), 
+          class: "btn btn-primary hover:scale-[1.02] transition-transform shadow-md" %>
+      
+      <%= link_to "Back to todolists", root_path, 
+          class: "btn btn-outline hover:scale-[1.02] transition-transform shadow-md" %>
+      <%= button_to "Destroy this todolist", @todolist, method: :delete, 
+        class: "btn btn-error hover:scale-[1.02] transition-transform shadow-md w-full sm:w-auto", 
+        form: { class: "flex justify-center" } %>
+    </div>    
+  </div>
 </div>

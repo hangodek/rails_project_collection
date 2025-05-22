@@ -1,48 +1,65 @@
-<h1 class="text-3xl font-bold">Task list</h1>
-
-<div class="flex gap-4 items-center">
-  <%= link_to "Create new task", new_todolist_path, class: "btn btn-primary" %>
-  <%= form_with method: :get, html: {class: "flex items-center gap-4"} do |form| %>
-
-    <div class="flex items-center gap-4" data-controller="filtercheckbox">
-      <div>
-        <%= form.label :completed, "Completed: " %>
-        <%= form.check_box :completed, class: "checkbox", disabled: params[:completed].present? == true, "data-action": "filtercheckbox#enablefilter" %>
-      </div>
-
-      <div>
-        <%= form.submit "Filter", class: "btn", disabled: true, "data-filtercheckbox-target": "filterbtn" %>
-      </div>
-    </div>
-    
-  <% end %>
+<div class="flex flex-col min-h-screen gap-6 p-6 bg-gradient-to-br from-blue-50 via-blue-75 to-blue-100 rounded-lg">
   
-  <%= form_with url: homepages_index_path, method: :get do |form| %>
-    <div>
-      <%= form.submit "Unfilter", class: "btn", disabled: params[:completed].present? == false %>
-    </div>
-  <% end %>
+  <div class="flex flex-row justify-between items-center mb-2">
+    <h1 class="text-4xl font-bold text-blue-800">Task list</h1>
+    <%= link_to "Create new task", new_todolist_path, class: "btn btn-primary hover:scale-105 transition-transform shadow-md" %>
+  </div>
   
-</div>
+  <div class="flex gap-4 p-6 bg-white/90 backdrop-blur-sm items-center rounded-lg shadow-sm border border-blue-100">
 
-<% if params[:completed] %>
-  <p>Filter is active (completed tasks only) <%= params[:completed] == "1" %></p>
-<% end %>
-
-
-<div id="todolists" class="grid grid-rows-3 grid-cols-3 grid gap-4">
-  <% @todolists.each do |todolist| %>
-
-    <% if todolist.completed == (params[:completed] == "1") %>
-      <div class="card shadow-2xl bg-base-100 w-96">
-          <div class="card-body">
-              <h2 class="card-title"><%= todolist.title %></h2>
-              <p><%= todolist.description %></p>
-              <div class="card-actions justify-end">
-                  <%= link_to "Show this todolist", todolist, class: "btn btn-secondary" %>
-              </div>
-          </div>
+    <%= form_with method: :get, html: {class: "flex items-center gap-6"} do |form| %>
+  
+      <div class="flex items-center gap-6" data-controller="filtercheckbox">
+        <div class="flex items-center gap-2">
+          <%= form.label :completed, "Completed: ", class: "text-blue-700 font-medium" %>
+          <%= form.check_box :completed, class: "checkbox checkbox-primary border-2 size-5", disabled: params[:completed].present? == true, "data-action": "filtercheckbox#enablefilter" %>
+        </div>
+  
+        <div>
+          <%= form.submit "Filter", class: "btn btn-outline btn-primary disabled:opacity-50", disabled: true, "data-filtercheckbox-target": "filterbtn" %>
+        </div>
+      </div>
+  
+    <% end %>
+  
+    <%= form_with url: homepages_index_path, method: :get do |form| %>
+      <div>
+        <%= form.submit "Unfilter", class: "btn btn-outline btn-accent disabled:opacity-30", disabled: params[:completed].present? == false %>
       </div>
     <% end %>
-  <% end %>
+  
+  </div>  
+  
+  <div id="todolists" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+    <% @todolists.each do |todolist| %>
+      <% if todolist.completed == (params[:completed] == "1") %>
+        <div class="card shadow-lg bg-white/90 hover:shadow-xl hover:-translate-y-1 duration-300 transition-all border border-blue-100/50">
+            <div class="card-body p-6">
+              <% if todolist.completed %>
+                <div class="flex justify-between items-center mb-3">
+                  <h2 class="card-title text-blue-900"><%= todolist.title %></h2>
+                  <div class="badge badge-success gap-1.5 py-2 px-3 text-sm font-semibold">
+                    <svg class="size-[1em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="currentColor" stroke-linejoin="miter" stroke-linecap="butt"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="2"></circle><polyline points="7 13 10 16 17 8" fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="2"></polyline></g></svg>
+                    Completed
+                  </div>
+                </div>
+              <% else %>
+                <div class="flex justify-between items-center mb-3">
+                  <h2 class="card-title text-blue-900"><%= todolist.title %></h2>
+                  <div class="badge badge-error gap-1.5 py-2 px-3 text-sm font-semibold">
+                    <svg class="size-[1em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="currentColor"><rect x="1.972" y="11" width="20.056" height="2" transform="translate(-4.971 12) rotate(-45)" fill="currentColor" stroke-width="0"></rect><path d="m12,23c-6.065,0-11-4.935-11-11S5.935,1,12,1s11,4.935,11,11-4.935,11-11,11Zm0-20C7.038,3,3,7.037,3,12s4.038,9,9,9,9-4.037,9-9S16.962,3,12,3Z" stroke-width="0" fill="currentColor"></path></g></svg>
+                    Uncompleted
+                  </div>
+                </div>
+              <% end %>
+                <p class="text-blue-800/90 mb-4"><%= todolist.description %></p>
+                <div class="card-actions justify-end gap-2">
+                    <%= link_to "Show this todolist", todolist, class: "btn btn-secondary btn-sm hover:scale-[1.02] transition-transform" %>
+                    <%= button_to todolist.completed ? "Mark incomplete" : "Mark as completed", todolist, class: todolist.completed ? "btn btn-error btn-sm hover:scale-[1.02] transition-transform" : "btn btn-success btn-sm hover:scale-[1.02] transition-transform", method: :patch, params: { todolist: {completed: !todolist.completed}}%>
+                </div>
+            </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>
